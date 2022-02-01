@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -21,7 +20,7 @@ public class Paint extends JFrame {
     
     JPanel gui, paint; //  위쪽은 gui, 아래쪽은 paint 로 이루어진 그림판
     
-    JButton pencil, eraser, color; // 연필, 지우개, 색 선택
+    JButton pencil, eraser, color, alleraser; // 연필, 지우개, 색, 모두지우기 선택
    
     JLabel thicknessInfo; // 도구굵기 라벨
     
@@ -64,6 +63,8 @@ public class Paint extends JFrame {
         pencil.setBackground(Color.WHITE); // 배경색 지정
         eraser = new JButton("지우개");
         eraser.setBackground(Color.WHITE); // 배경색 지정
+        alleraser = new JButton("모두 지우기");
+        alleraser.setBackground(Color.WHITE); // 배경색 지정
         color = new JButton("색 선택");
         color.setBackground(Color.WHITE); // 배경색 지정
         
@@ -78,11 +79,13 @@ public class Paint extends JFrame {
         pencil.setBounds(10,10,90,55); // 연필 버튼 위치 지정
         eraser.setBounds(105,10,109,55); // 지우개 버튼 위치 지정
         color.setBounds(785,10,90,55); // 선색상 버튼 위치 지정
+        alleraser.setBounds(200,10,110,55); // 모두 지우기 버튼 위치 지정
         thicknessInfo.setBounds(640,10,100,55); // 도구굵기 라벨 위치 지정
         thicknessControl.setBounds(720,22,50,35); // 도구굵기 텍스트필드 위치 지정
         
         gui.add(pencil); // gui에 연필 버튼 추가
         gui.add(eraser); // gui에 지우개 버튼 추가
+        gui.add(alleraser); // gui에 선색상 버튼 추가
         gui.add(color); // gui에 선색상 버튼 추가
         gui.add(thicknessInfo); // gui에 도구굵기 라벨 추가
         gui.add(thicknessControl); // gui에 도구굵기 텍스트필드 추가
@@ -122,6 +125,7 @@ public class Paint extends JFrame {
           // paint에 마우스 모션리스너 추가
         pencil.addActionListener(new ToolActionListener()); // 연필버튼 액션처리
         eraser.addActionListener(new ToolActionListener()); // 지우개버튼 액션처리
+        alleraser.addActionListener(new ToolActionListener()); // 모두지우기 버튼 액션처리
         color.addActionListener(new ActionListener() {
           // 선색상버튼 액션처리를 익명클래스로 작성
             public void actionPerformed(ActionEvent e) { // 오버라이딩
@@ -164,6 +168,8 @@ public class Paint extends JFrame {
             } else if(e.getSource() == eraser) {
                 g.setColor(Color.WHITE);
             // 그려지는 색을 흰색으로 처리해 지워지는것처럼 보이게함
+            } else if(e.getSource() == alleraser) {
+              paint.repaint();
             }
         }
     }
